@@ -26,6 +26,14 @@ for lat, lon, name, elev in zip(df['LAT'], df['LON'], df['NAME'], df['ELEV']):
         icon=folium.Icon(color=color(elev)))
     )
 
+map.add_child(folium.GeoJson(
+    data=open('layer.json'),
+    name='World Population',
+    style_function=lambda x: {'fillColor': 'green' if
+        x['properties']['POP2005'] <= 10000000 else 'orange'
+        if 10000000 <= x['properties']['POP2005'] < 20000000 else 'red'}
+    ))
+
 map.save(outfile="test.html")
 
 
